@@ -15,7 +15,7 @@ def get_sum(ab,x,i):
     n = len(ab)
     for j in range(i+1,n):
         summ+=ab[i,j]*x[j]
-    return 1
+    return summ
 
 def main():
     #this is an example from class
@@ -23,6 +23,8 @@ def main():
     a = np.array(a_lst) #this makes a_lst an 2D array
     b_lst = [4, 5,-2]
     b= np.array(b_lst)
+    x_lst=[99.9,99.9,99.9]
+    x=np.array(x_lst)
     n = len(ab)         #number of rows in ab
     x[n-1] = b[n-1]/a[n-1,n-1]
     for i in range(n-2,-1,-1):
