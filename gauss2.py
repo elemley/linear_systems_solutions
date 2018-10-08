@@ -12,32 +12,33 @@ def augment(a,b):
 
 def get_sum(ab,x,i):
     summ = 0
-    n = len(ab)
+    n = len(ab)     #gets # of rows in augmented matrix
     for j in range(i+1,n):
-        summ+=ab[i,j]*x[j]
+        summ+=ab[i,j]*x[j]      #gets the summation we need for each xi in back sub
     return summ
 
+def back_sub(ab):
+    n = len(ab)
+    x = np.empty((n,1))         #make an empty matrix with n rows and 1 column
+    x[n - 1] = ab[n-1,n] / ab[n - 1, n - 1]     #Find x_n-1 value of x for last row
+    for i in range(n - 2, -1, -1):             #Now work through remaining rows - start at n-2 and go backwards to row 0
+        summ = get_sum(ab, x, i)                #use get_sub to return value of summation
+        x[i] = (ab[i,n] - summ) / ab[i][i]      #this is the back sub equation we derived from class
+    return x
+
 def main():
+    #Solving system of equations of form:
+    # a x = b
     #this is an example from class
     a_lst = [[1, -3, 1],[0, 1, -3],[0, 0,1]]   #this is a list of lists
-    a = np.array(a_lst) #this makes a_lst an 2D array
+    a = np.array(a_lst) #this makes a_lst an 2D array with a maxtrix
 
     b_lst = [4, 5,-2]
-    b= np.array(b_lst)
+    b= np.array(b_lst) #make the RHS vector
 
     ab = augment(a,b)   #augment the b RHS vector on the right side of a
 
-    x_lst=[99.9,99.9,99.9]
-    x=np.array(x_lst)
-
-    n = len(ab)         #number of rows in ab
-
-    x[n-1] = b[n-1]/a[n-1,n-1]
-
-    for i in range(n-2,-1,-1):
-        summ = get_sum(ab,x,i)
-        x[i] = (b[i]-summ)/a[i][i]
-
+    x = back_sub(ab)     #matrix is already in upper triangular form - now can do back sub to get x
 
     print(x)
 
