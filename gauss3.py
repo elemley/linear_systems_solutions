@@ -30,8 +30,8 @@ def normalize(ab,i):
     n = len(ab)
     new_ab = ab[:]      #This is a special way to make a copy of ab...
     norm = ab[i,i]
-    for ####:           ##fill in here!
-        ###
+    for j in range(i,n+1):           ##fill in here!
+        new_ab[i,j]=ab[i,j]/norm
     return new_ab
 
 def main():
@@ -50,7 +50,7 @@ def main():
 
     #x = back_sub(ab)     #matrix is already in upper triangular form - now can do back sub to get x
 
-    ab_normed = normalize(ab,0)
+    ab_normed = normalize(ab,1)
 
     print(ab_normed)
 

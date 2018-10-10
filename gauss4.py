@@ -37,7 +37,8 @@ def normalize(ab,i):
 def forward_sub(ab,i):
     n = len(ab)
     ab_normed = normalize(ab,i)
-    for ###
+    for j in range(i,n+1):
+        ab_normed[i+1,j]-=ab_normed[i+1,i]*ab_normed[i,j]
                         ####fill in here
 
     return ab_normed
@@ -50,15 +51,15 @@ def main():
     #a_lst = [[1, -3, 1],[0, 1, -3],[0, 0,1]]   #this is a list of lists
     a = np.array(a_lst) #this makes a_lst an 2D array with a maxtrix
 
-    b_lst = [-5.173, -5.458,4.415]
     #b_lst = [4, 5,-2]
+    b_lst = [-5.173, -5.458,4.415]
     b= np.array(b_lst) #make the RHS vector
 
     ab = augment(a,b)   #augment the b RHS vector on the right side of a
 
     #x = back_sub(ab)     #matrix is already in upper triangular form - now can do back sub to get x
 
-    ab_elim = forward_sub(ab,0)
+    ab_elim = forward_sub(ab,1)
 
     print(ab_elim)
 

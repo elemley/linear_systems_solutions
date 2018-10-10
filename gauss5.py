@@ -34,13 +34,14 @@ def normalize(ab,i):
         new_ab[i,j] = ab[i,j] / norm
     return new_ab
 
-def forward_sub(ab,i):
-    n = len(ab)
-    ab_normed = normalize(ab,i)
-    for #####
-        for ####
+def forward_sub(ab_orig,i):
+    n = len(ab_orig)
+    ab = normalize(ab_orig,i)
+    for k in range(i+1,n):
+        for j in range(i,n+1):
+            ab[k,j]-= ab[k,i]*ab[i,j]
 
-    return ab_normed
+    return ab
 
 def main():
     #Solving system of equations of form:
@@ -59,8 +60,10 @@ def main():
     #x = back_sub(ab)     #matrix is already in upper triangular form - now can do back sub to get x
 
     ab_elim = forward_sub(ab,0)
-
     print(ab_elim)
+    ab_elim = forward_sub(ab, 1)
+    print(ab_elim)
+
 
 
     """
