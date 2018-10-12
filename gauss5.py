@@ -47,12 +47,12 @@ def main():
     #Solving system of equations of form:
     # a x = b
     #this is an example from class
-    a_lst = [[0.143, 0.357,2.01], [-1.31, 0.911, 1.99],[11.2, -4.30, -0.605]]   #this is a list of lists
-    #a_lst = [[1, -3, 1],[0, 1, -3],[0, 0,1]]   #this is a list of lists
+    #a_lst = [[0.143, 0.357,2.01], [-1.31, 0.911, 1.99],[11.2, -4.30, -0.605]]   #this is a list of lists
+    a_lst = [[1, -3, 1],[0, 1, -3],[0, 0,1]]   #this is a list of lists
     a = np.array(a_lst) #this makes a_lst an 2D array with a maxtrix
 
-    b_lst = [-5.173, -5.458,4.415]
-    #b_lst = [4, 5,-2]
+    #b_lst = [-5.173, -5.458,4.415]
+    b_lst = [4, 5,-2]
     b= np.array(b_lst) #make the RHS vector
 
     ab = augment(a,b)   #augment the b RHS vector on the right side of a
@@ -64,6 +64,8 @@ def main():
     ab_elim = forward_sub(ab, 1)
     print(ab_elim)
 
+    x = back_sub(ab_elim)
+    print(x)
 
 
     """
