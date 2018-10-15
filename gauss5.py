@@ -7,17 +7,10 @@ import numpy as np
 
 def get_ordered(a,order):
     ab_new = np.array(a)
-    #print(ab_new)
-    #print(a)
     n = len(a)
-    #print(ab_new)
     for i in range(0,n):
         for j in range(0,n+1):
             ab_new[i,j] = a[order[i],j]
-            #print(i,j,order[i],a[order[i],j],ab_new[i,j])
-        #print(i,j,order[i])
-        #print(ab_new)
-        #print(a)
     return ab_new
 
 def augment(a,b):
