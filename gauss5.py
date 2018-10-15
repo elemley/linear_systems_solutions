@@ -1,12 +1,13 @@
 from math import *
 import numpy as np
+import copy
 
 #a is coefficient matrix (it is rxc)
 #b is right-hand-side (RHS) (it is cx1)
 #x is the solution (it is cx1)
 
 def get_ordered(a,order):
-    ab_new = np.array(a)
+    ab_new = copy.deepcopy(a)
     n = len(a)
     for i in range(0,n):
         for j in range(0,n+1):
@@ -36,7 +37,7 @@ def back_sub(ab):
 
 def normalize(ab,i):
     n = len(ab)
-    new_ab = ab[:]      #This is a special way to make a copy of ab...
+    new_ab = copy.deepcopy(ab)
     norm = ab[i,i]
     for j in range(i,n+1):
         new_ab[i,j] = ab[i,j] / norm
@@ -56,11 +57,11 @@ def main():
     # a x = b
     #this is an example from class
     #a_lst = [[0.143, 0.357,2.01], [-1.31, 0.911, 1.99],[11.2, -4.30, -0.605]]   #this is a list of lists
-    a_lst = [[1, -3, 1],[2, 1, -3],[-3, 0,1]]   #this is a list of lists
+    a_lst = [[1.0, -3.0, 1.0],[2.0, -8.0, 8.0],[-6.0, 3.0,-15.0]]   #this is a list of lists
     a = np.array(a_lst) #this makes a_lst an 2D array with a maxtrix
 
     #b_lst = [-5.173, -5.458,4.415]
-    b_lst = [4, 5,-2]
+    b_lst = [4.0, -2.0,9.0]
     b= np.array(b_lst) #make the RHS vector
 
     ab = augment(a,b)   #augment the b RHS vector on the right side of a
@@ -68,20 +69,23 @@ def main():
     order = [1,0,2]
 
     #ab_ordered = ab[:]
-    ab_ordered=get_ordered(ab,order)
-    print(ab_ordered)
+    #ab_ordered=get_ordered(ab,order)
+    #print(ab_ordered)
 
-    """
-    ab_old = ab[:]
-    ab_new = ab[:]
+    ab_old = copy.deepcopy(ab)
+    ab_new = copy.deepcopy(ab)
+    print(ab)
     for i in range(0,n-1):
-            ab_new = forward_sub(ab_old,i)
-            ab_old = ab_new[:]
+        ab_new = forward_sub(ab_old,i)
+        ab_old = copy.deepcopy(ab_new)
+        print(ab_new)
+        print(ab_old)
+    ab_final = normalize(ab_new,n-1)
 
-    x = back_sub(ab_new)
+    print(ab_final)
+
+    x = back_sub(ab_final)
     print(x)
-    """
-
     """
     print a,b
     a = np.empty(shape=(n,n))
