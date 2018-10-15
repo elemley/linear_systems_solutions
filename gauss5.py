@@ -57,14 +57,17 @@ def main():
 
     ab = augment(a,b)   #augment the b RHS vector on the right side of a
 
-    #x = back_sub(ab)     #matrix is already in upper triangular form - now can do back sub to get x
 
-    ab_elim = forward_sub(ab,0)
-    print(ab_elim)
-    ab_elim = forward_sub(ab, 1)
-    print(ab_elim)
 
-    x = back_sub(ab_elim)
+
+
+    ab_old = ab[:]
+    ab_new = ab[:]
+    for i in range(0,n-1)
+            ab_new = forward_sub(ab_old,i)
+            ab_old = ab_new[:]
+
+    x = back_sub(ab_new)
     print(x)
 
 
