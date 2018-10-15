@@ -5,6 +5,15 @@ import numpy as np
 #b is right-hand-side (RHS) (it is cx1)
 #x is the solution (it is cx1)
 
+def get_ordered(a,order):
+    ab_new = a[:]
+    #print(ab_new)
+    n = len(a)
+    for i in range(0,n):
+        for j in range(0,n+1):
+            ab_new[i,j] = a[order[i],j]
+    return ab_new
+
 def augment(a,b):
     #set things up for Gaussian elim.
     ab = np.c_[a, b]  # we now should have the augmented form - this is just a python numpy library function
@@ -48,7 +57,7 @@ def main():
     # a x = b
     #this is an example from class
     #a_lst = [[0.143, 0.357,2.01], [-1.31, 0.911, 1.99],[11.2, -4.30, -0.605]]   #this is a list of lists
-    a_lst = [[1, -3, 1],[0, 1, -3],[0, 0,1]]   #this is a list of lists
+    a_lst = [[1, -3, 1],[2, 1, -3],[-3, 0,1]]   #this is a list of lists
     a = np.array(a_lst) #this makes a_lst an 2D array with a maxtrix
 
     #b_lst = [-5.173, -5.458,4.415]
@@ -56,20 +65,23 @@ def main():
     b= np.array(b_lst) #make the RHS vector
 
     ab = augment(a,b)   #augment the b RHS vector on the right side of a
+    n = len(ab)
+    order = [1,0,2]
 
+    #ab_ordered = ab[:]
+    ab_ordered=get_ordered(ab,order)
+    print(ab_ordered)
 
-
-
-
+    """
     ab_old = ab[:]
     ab_new = ab[:]
-    for i in range(0,n-1)
+    for i in range(0,n-1):
             ab_new = forward_sub(ab_old,i)
             ab_old = ab_new[:]
 
     x = back_sub(ab_new)
     print(x)
-
+    """
 
     """
     print a,b
