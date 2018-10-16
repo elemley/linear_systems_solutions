@@ -45,58 +45,51 @@ def normalize(ab,i):
 
 def forward_sub(ab_orig,i):
     n = len(ab_orig)
-    ab = normalize(ab_orig,i)
+    ab_orig = normalize(ab_orig,i)
+    ab = copy.deepcopy(ab_orig)
     for k in range(i+1,n):
         for j in range(i,n+1):
-            ab[k,j]-= ab[k,i]*ab[i,j]
-
+            ab[k,j]-= ab_orig[k,i]*ab_orig[i,j]
+            print(i,j,k)
     return ab
 
 def main():
     #Solving system of equations of form:
     # a x = b
     #this is an example from class
-    #a_lst = [[0.143, 0.357,2.01], [-1.31, 0.911, 1.99],[11.2, -4.30, -0.605]]   #this is a list of lists
-    a_lst = [[1.0, -3.0, 1.0],[2.0, -8.0, 8.0],[-6.0, 3.0,-15.0]]   #this is a list of lists
+    a_lst = [[0.143, 0.357,2.01], [-1.31, 0.911, 1.99],[11.2, -4.30, -0.605]]   #this is a list of lists
+    #a_lst = [[1.0, -3.0, 1.0],[2.0, -8.0, 8.0],[-6.0, 3.0,-15.0]]   #this is a list of lists
     a = np.array(a_lst) #this makes a_lst an 2D array with a maxtrix
 
-    #b_lst = [-5.173, -5.458,4.415]
-    b_lst = [4.0, -2.0,9.0]
+    b_lst = [-5.173, -5.458,4.415]
+    #b_lst = [4.0, -2.0,9.0]
     b= np.array(b_lst) #make the RHS vector
 
     ab = augment(a,b)   #augment the b RHS vector on the right side of a
     n = len(ab)
-    order = [1,0,2]
 
+    print(ab)
+    #order = [1,0,2]
     #ab_ordered = ab[:]
     #ab_ordered=get_ordered(ab,order)
     #print(ab_ordered)
 
     ab_old = copy.deepcopy(ab)
     ab_new = copy.deepcopy(ab)
-    print(ab)
+    #print(ab)
+
     for i in range(0,n-1):
         ab_new = forward_sub(ab_old,i)
-        ab_old = copy.deepcopy(ab_new)
         print(ab_new)
-        print(ab_old)
+        ab_old = copy.deepcopy(ab_new)
+
     ab_final = normalize(ab_new,n-1)
 
     print(ab_final)
 
     x = back_sub(ab_final)
     print(x)
-    """
-    print a,b
-    a = np.empty(shape=(n,n))
-    b = np.empty(shape=(n,1))
-    print(ab)
-    print(ab[0,0])
-    print(ab[1,1])
-    print(ab[0])
-    print(ab[1])
-    print(ab[2])
-    """
+
 
 if __name__ == '__main__':
     main()
