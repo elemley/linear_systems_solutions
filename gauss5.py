@@ -50,7 +50,6 @@ def forward_sub(ab_orig,i):
     for k in range(i+1,n):
         for j in range(i,n+1):
             ab[k,j]-= ab_orig[k,i]*ab_orig[i,j]
-            print(i,j,k)
     return ab
 
 def main():
