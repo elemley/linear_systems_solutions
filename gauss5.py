@@ -68,7 +68,6 @@ def main():
     ab = augment(a,b)   #augment the b RHS vector on the right side of a
     n = len(ab)
 
-    print(ab)
     #order = [1,0,2]
     #ab_ordered = ab[:]
     #ab_ordered=get_ordered(ab,order)
@@ -76,15 +75,12 @@ def main():
 
     ab_old = copy.deepcopy(ab)
     ab_new = copy.deepcopy(ab)
-    #print(ab)
 
     for i in range(0,n-1):
         ab_new = forward_sub(ab_old,i)
-        print(ab_new)
         ab_old = copy.deepcopy(ab_new)
 
     ab_final = normalize(ab_new,n-1)
-
     print(ab_final)
 
     x = back_sub(ab_final)
