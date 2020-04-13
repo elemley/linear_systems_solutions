@@ -3,6 +3,7 @@ import numpy as np
 import copy
 from gauss_fns import *
 #a is coefficient matrix (it is rxc) #b is right-hand-side (RHS) (it is cx1) #x is the solution (it is cx1)
+
 def main():
     #Solving system of equations of form:
     # a x = b
@@ -18,6 +19,7 @@ def main():
     a = np.array(a_lst) #this makes the a coefficient maxtrix
     b= np.array(b_lst) #make the RHS vector
     ab = np.c_[a,b]     #augment a with b
+    print(ab)
     ab_new = forward_elim(ab)   #Do complete elimination and normalize entire diagonal
     print(ab_new)
     x = back_sub(ab_new)        #Do back sub on the upper triangular

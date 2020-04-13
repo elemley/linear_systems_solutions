@@ -21,11 +21,11 @@ def main():
     ab = np.c_[a,b]     #augment a with b
     n = len(ab)
     m = len(ab[0])
-    i = 0
-    order = np.arange(n)
+    order = np.arange(n)    # order = [0,1,2]
     ab_new = copy.deepcopy(ab)
     for i in range(0,n-1):
         order = pivot(ab_new, i, order)  # Do complete elimination and normalize entire diagonal (use partial pivoting)
+        # order = [2,1,0]
         ab_new = normalize_pp(ab_new,i,order)
         for j in range(i+1,n):
             for k in range(i+1,m):
