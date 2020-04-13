@@ -25,11 +25,12 @@ def normalize(ab,i):
     return new_ab
 def forward_elim(ab):
     n = len(ab)         #get num of rows
+    m = len(ab[0])
     ab_new = copy.deepcopy(ab)
     for i in range(0,n-1):
         ab_new = normalize(ab_new,i)
         for j in range(i+1,n):
-            for k in range(i+1,m):
+            for k in range(i+1,m):      #oops  I need to define m
                 ab_new[j,k] -= ab_new[j,i]*ab_new[i,k]
             ab_new[j,i] = 0.0
     ab_new = normalize(ab_new,n-1)
