@@ -1,55 +1,61 @@
 from math import *
-import numpy as np
 import copy
-from gauss_fns import *
-#a is coefficient matrix (it is rxc) #b is right-hand-side (RHS) (it is cx1) #x is the solution (it is cx1)
-def main():
-    #Solving system of equations of form:
-    # a x = b
-    #fns in gauss_fns are:
-    # get_sum(ab, x, i) return is summation needed for back_sub
-    # back_sub(ab)      return is x -- the solution
-    # normalize(ab, i)  return is a new matrix (same size as ab) with row i normalized
-    # forward_elim(ab)    return is new matrix (same size as ab) with all forward elim done
+import numpy as np
+import scipy
+import scipy.linalg
 
-    #this is an example from class
-    a_lst = [[0.143, 0.357,2.01], [-1.31, 0.911, 1.99],[11.2, -4.30, -0.605]]   #this is a list of lists
-    b_lst = [-5.173, -5.458,4.415]
-    a = np.array(a_lst) #this makes the a coefficient maxtrix
-    b= np.array(b_lst) #make the RHS vector
-    ab = np.c_[a,b]     #augment a with b
-    #
-    n = len(ab)         #get num of rows
-    m = len(ab[0])
-    ab_new = copy.deepcopy(ab)
-    print(ab_new)
-    n = len(ab)         #get num of rows
-    m = len(ab[0])
-    ab_new = copy.deepcopy(ab)
-    #Code below does forward elim. only... to do Gauss-Jordan we need to eliminate above and below diagonal
-    for i in range(0,n):      # i is the pivot row... something is not quite right...
-        #We are skipping the last row as a pivot row, but now we need to eliminate above the last pivot row...
-        ab_new = normalize(ab_new,i)    #we will still need to normalize the pivot row
-        for j in range(0,n):          # Now we want to eliminate above and below the pivot
-            #now... we need to make sure and not eliminate in the pivot row itself.
-            if i!=j:        #ensures we skip the pivot row
-                for k in range(i+1,m):  #still OK, we should go from pivot column to end ot augmented matrix
-                    ab_new[j,k] -= ab_new[j,i]*ab_new[i,k]      #our basic elimination formula...
-                ab_new[j,i] = 0.0
-    ab_new = normalize(ab_new,n-1)
-    print(ab_new)       #Now the last column contains the x vector!
+def get_sum(L,U,i,j):
+    summ = 0
+    for k in range(0,j):
+        summ+=L[i][k]*U[k][j]
+    return summ
+
+def LU_Crout(a):
+    n = len(a)
+    L = np.zeros((n,n),dtype=float)
+    U = np.zeros((n, n), dtype=float)
+    #Fill in first column (all the L's are just equal to the a's)
+    for i in range(0,n):
+        L[i][0]=a[i][0]
+    print(f"L = \n {L}")
+    #fill in the diagonal of the U with 1's
+    for i in range(0,n):
+        U[i][i] = 1.0
+    print(f"U = \n {U}")
+    #Fill in the first row of U with simple formula
+    for j in range(1,n):
+        U[0][j] = a[0][j]/L[0][0]
+    print(f"U = \n {U}")
+    #Now fill in the rest of both U and L
+    for i in range(1,n):
+        #Work from the second row to the bottom
+        for j in range(1,n):
+            #Work from second column to last
+            if j<= i :
+                #To the left and on the diagonal calc. L values
+                L[i][j]=a[i][j] - get_sum(L,U,i,j)
+            else:
+                #To the right of the diagonal calc. U values
+                U[i][j] = (a[i][j] - get_sum(L, U, i, j)) / L[i][i]
+    return L,U
+
+def main():
+    A = np.array([[4.,-2.,-3.,6.],[-6.,7.,6.5,-6.],[1.,7.5,6.25,5.5],[-12.,22.,15.5,-1.]])
+    B = np.array([[14],[-1],[14]])
+
+    L,U = LU_Crout(A)
+    print(f"The solution for L = \n {L}")
+    print(f"The solution for U = \n {U}")
+    print(f"LU = {np.matmul(L,U)}")
+    print(f"A = {A}")
+
+
+
+    #P,L,U = scipy.linalg.lu(A)
+    #print(f"P={P} \n L={L} \n U={U}")
+
+
+
 
 if __name__ == '__main__':
     main()
-
-
-#a_lst = [[1.00, 2.50, 14.1], [0.0, 1.0, 4.89], [0.0, 0.0, 1.0]]  # this is a list of lists
-
-#a_lst = [[1.0, -3.0, 1.0],[2.0, -8.0, 8.0],[-6.0, 3.0,-15.0]]   #this is a list of lists
-
-# a_lst = [[0.143, 0.357,2.01], [-1.31, 0.911, 1.99],[11.2, -4.30, -0.605]]   #this is a list of lists
-# a_lst = [[0.0, 5.0,-1.0], [-4.0, 2.0, 3.0],[4.0, 3.0, 3.0]]   #this is a list of lists
-
-# b_lst = [-5.0, -17.0,7.0]
-# b_lst = [-5.173, -5.458,4.415]
-    #b_lst = [4.0,-2.0,9.0]
