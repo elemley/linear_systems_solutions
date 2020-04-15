@@ -26,8 +26,8 @@ def main():
     n = len(ab)         #get num of rows
     m = len(ab[0])
     ab_new = copy.deepcopy(ab)
-    #Code below originally did forward elim. only... to do Gauss-Jordan we need to eliminate above and below diagonal
-    for i in range(0,n):      # i is the pivot row...
+    #Code below does forward elim. only... to do Gauss-Jordan we need to eliminate above and below diagonal
+    for i in range(0,n):      # i is the pivot row... something is not quite right...
         #We are skipping the last row as a pivot row, but now we need to eliminate above the last pivot row...
         ab_new = normalize(ab_new,i)    #we will still need to normalize the pivot row
         for j in range(0,n):          # Now we want to eliminate above and below the pivot
