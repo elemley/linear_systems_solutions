@@ -17,15 +17,15 @@ def LU_Crout(a):
     #Fill in first column (all the L's are just equal to the a's)
     for i in range(0,n):
         L[i][0]=a[i][0]
-    print(f"L = \n {L}")
+    #print(f"L = \n {L}")
     #fill in the diagonal of the U with 1's
     for i in range(0,n):
         U[i][i] = 1.0
-    print(f"U = \n {U}")
+    #print(f"U = \n {U}")
     #Fill in the first row of U with simple formula
     for j in range(1,n):
         U[0][j] = a[0][j]/L[0][0]
-    print(f"U = \n {U}")
+    #print(f"U = \n {U}")
     #Now fill in the rest of both U and L
     for i in range(1,n):
         #Work from the second row to the bottom
