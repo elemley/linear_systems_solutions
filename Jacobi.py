@@ -18,22 +18,21 @@ def max_rel_err(x_kplus1,x_k):
 def main():
     #Solving system of equations of form:
     # a x = b
-    #this is an example from class
-    a_lst = [[0.143, 0.357,2.01], [-1.31, 0.911, 1.99],[11.2, -4.30, -0.605]]   #this is a list of lists
-    b_lst = [-5.173, -5.458,4.415]
-    a = np.array(a_lst) #this makes the a coefficient maxtrix
-    b= np.array(b_lst) #make the RHS vector
+    a = np.array([[9., 2., 3., 2.], [2., 8., -2., 3.], [-3., 2., 11.,-4.], [-2., 3., 2., 10.]])
+    b = np.array([[54.5], [-14], [12.5],[-21] ])
     n = len(a)
     x_k = np.zeros(n)   #initial guess for x... all zeros will not always be a good guess...
     x_kplus1 = np.zeros(n)
-    #x_k = np.array([0.1,0.2,0.33])
-    #x_kplus1 = np.array([0.4,0.5,0.6])
-    max_iter = 200
+    max_iter = 10
     err_stop = 1e-5
     rel_err = 1.1* err_stop
     for count in range(1,max_iter+1):
         for i in range(0,n):
-            x_kplus1[i] = (b[i] - get_sum(a,x_k,i))/a[i,i]
+            summ = 0
+            for j in range(0,n):
+                if i!=j:
+                    summ+=a[i,j]*x_k[j]
+            x_kplus1[i] = (b[i] - summ)/a[i,i]
         print(x_kplus1)
         if count > 1:
             tmp = max_rel_err(x_kplus1,x_k)
