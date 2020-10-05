@@ -17,8 +17,10 @@ def main():
     #this is an example from class
     a_lst = [[0.143, 0.357,2.01], [-1.31, 0.911, 1.99],[11.2, -4.30, -0.605]]   #this is a list of lists
     b_lst = [-5.173, -5.458,4.415]
-    a = np.array(a_lst) #this makes the a coefficient maxtrix
-    b= np.array(b_lst) #make the RHS vector
+    #a = np.array(a_lst) #this makes the a coefficient maxtrix
+    #b= np.array(b_lst) #make the RHS vector
+    a = np.array([[9., 2., 3., 2.], [2., 8., -2., 3.], [-3., 2., 11.,-4.], [-2., 3., 2., 10.]])
+    b = np.array([[54.5], [-14], [12.5],[-21] ])
     ab = np.c_[a,b]     #augment a with b
     ab_new, x, order = partial_pivot_gauss(ab)
     print_ordered(ab_new,order)

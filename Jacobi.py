@@ -23,16 +23,12 @@ def main():
     n = len(a)
     x_k = np.zeros(n)   #initial guess for x... all zeros will not always be a good guess...
     x_kplus1 = np.zeros(n)
-    max_iter = 10
+    max_iter = 1000
     err_stop = 1e-5
     rel_err = 1.1* err_stop
     for count in range(1,max_iter+1):
         for i in range(0,n):
-            summ = 0
-            for j in range(0,n):
-                if i!=j:
-                    summ+=a[i,j]*x_k[j]
-            x_kplus1[i] = (b[i] - summ)/a[i,i]
+            x_kplus1[i] = (b[i] - get_sum(a,x_k,i))/a[i,i]
         print(x_kplus1)
         if count > 1:
             tmp = max_rel_err(x_kplus1,x_k)
